@@ -1,0 +1,7 @@
+taskbar.taskbarform:
+  path: '/admin/config/user-interface/taskbar'
+  defaults:
+    _form: '\Drupal\taskbar\Form\TaskbarForm'
+    _title: 'Taskbar'
+  requirements:
+    _permission: 'configure taskbar settings'

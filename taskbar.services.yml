@@ -1,0 +1,4 @@
+services:
+  taskbar.builder:
+    class: Drupal\taskbar\Service\Taskbar
+    arguments: ['@request_stack', '@config.factory', '@router.admin_context','@current_route_match', '@plugin.manager.menu.local_task', '@access_manager', '@current_user']

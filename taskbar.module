@@ -1,2 +1,8 @@
 <?php
 
+/**
+ * Implements hook_toolbar().
+ */
+function taskbar_toolbar() {
+  return \Drupal::service('taskbar.builder')->buildTaskBar();
+}
