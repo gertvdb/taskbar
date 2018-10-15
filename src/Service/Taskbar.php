@@ -141,8 +141,8 @@ class Taskbar implements ContainerInjectionInterface {
     }
 
     $route = $this->routeMatch->getRouteObject();
-    $is_admin = $this->adminContext->isAdminRoute($route);
-    if ($is_admin) {
+    $isAdmin = $this->adminContext->isAdminRoute($route);
+    if ($isAdmin) {
       return [];
     }
 
@@ -204,13 +204,13 @@ class Taskbar implements ContainerInjectionInterface {
    */
   private function getLocalTasksFromRoute($level) {
     // Get the current route.
-    $current_route = $this->routeMatch->getRouteName();
+    $currentRoute = $this->routeMatch->getRouteName();
 
     // Get the local tasks for the current route.
-    $local_tasks = $this->localTaskManager->getLocalTasks($current_route, $level);
+    $localTasks = $this->localTaskManager->getLocalTasks($currentRoute, $level);
 
     // Get links for local tasks.
-    $links = $this->getLocalTaskAsLinks($local_tasks);
+    $links = $this->getLocalTaskAsLinks($localTasks);
 
     return $links;
   }
@@ -218,28 +218,28 @@ class Taskbar implements ContainerInjectionInterface {
   /**
    * Get the link objects.
    *
-   * @param array $local_tasks
+   * @param array $localTasks
    *   An array of local tasks.
    *
    * @return \Drupal\core\Link[]
    *   An array of Link objects.
    */
-  private function getLocalTaskAsLinks(array $local_tasks) {
+  private function getLocalTaskAsLinks(array $localTasks) {
     $links = [];
 
     // Sort them by weight.
-    uasort($local_tasks['tabs'], [SortArray::class, 'sortByWeightProperty']);
+    uasort($localTasks['tabs'], [SortArray::class, 'sortByWeightProperty']);
 
-    foreach ($local_tasks['tabs'] as $key => $task) {
+    foreach ($localTasks['tabs'] as $task) {
 
       /** @var \Drupal\Core\Url $url */
       $url = $task['#link']['url'];
       $title = $task['#link']['title'];
 
       // Only include tasks which current user is allowed to access.
-      $has_access = $this->accessManager->checkNamedRoute($url->getRouteName(), $url->getRouteParameters(), $this->account);
+      $hasAccess = $this->accessManager->checkNamedRoute($url->getRouteName(), $url->getRouteParameters(), $this->account);
 
-      if ($has_access) {
+      if ($hasAccess) {
         $links[] = Link::fromTextAndUrl($title, $url);
       }
     }

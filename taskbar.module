@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Module file for taskbar.
+ */
+
+/**
  * Implements hook_toolbar().
  */
 function taskbar_toolbar() {
