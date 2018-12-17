@@ -190,6 +190,9 @@ class Taskbar implements ContainerInjectionInterface {
           ],
         ],
       ],
+      '#cache' => [
+        'max-age' => 0, // For now we don't cache the taskbar.
+      ],
     ];
   }
 
