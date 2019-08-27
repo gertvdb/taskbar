@@ -37,7 +37,7 @@ class TaskbarForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $formState, Request $request = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, Request $request = NULL) {
     $config = $this->config(self::CONFIG_NAME);
 
     $form['local_tasks'] = [
@@ -52,17 +52,17 @@ class TaskbarForm extends ConfigFormBase {
       '#default_value' => $config->get('local_tasks_active'),
     ];
 
-    return parent::buildForm($form, $formState);
+    return parent::buildForm($form, $form_state);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $formState) {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config(self::CONFIG_NAME);
-    $config->set('local_tasks_active', $formState->getValue('local_tasks_active'));
+    $config->set('local_tasks_active', $form_state->getValue('local_tasks_active'));
     $config->save();
-    parent::submitForm($form, $formState);
+    parent::submitForm($form, $form_state);
   }
 
 }
