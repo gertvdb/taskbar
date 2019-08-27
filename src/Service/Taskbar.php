@@ -135,8 +135,11 @@ class Taskbar implements ContainerInjectionInterface {
    */
   private function buildLocalTasks($title, $level) {
     $currentRequest = $this->request->getCurrentRequest();
-    $node = $currentRequest->attributes->get('node');
-    if (!$node) {
+
+    $all = $currentRequest->attributes->all();
+    $entity = isset($all['_entity']) ? $all['_entity'] : NULL;
+
+    if (!$entity) {
       return [];
     }
 
