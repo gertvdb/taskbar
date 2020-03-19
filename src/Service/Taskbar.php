@@ -4,6 +4,7 @@ namespace Drupal\taskbar\Service;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -137,7 +138,19 @@ class Taskbar implements ContainerInjectionInterface {
     $currentRequest = $this->request->getCurrentRequest();
 
     $all = $currentRequest->attributes->all();
+
+    // Support older versions when entity was passed through _entity
     $entity = isset($all['_entity']) ? $all['_entity'] : NULL;
+    $all = $currentRequest->attributes->all();
+    if (!$entity && !empty($all)) {
+      foreach ($all as $item) {
+          if (!$item instanceof ContentEntityInterface) {
+              continue;
+          }
+
+          $entity = $item;
+      }
+    }
 
     if (!$entity) {
       return [];
